@@ -9,3 +9,4 @@ export async function getCabins() {
   }
   return data;
 }
+export default getCabins;
