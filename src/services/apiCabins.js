@@ -13,15 +13,23 @@ export async function getCabins() {
 export default getCabins;
 
 export async function createCabin(newCabin) {
+  // const { data, error } = await supabase.from("cabins").insert([newCabin]);
+  console.log(newCabin);
+
   const { data, error } = await supabase
     .from("cabins")
     .insert([newCabin])
     .select();
 
   if (error) {
-    console.error(error);
-    throw new Error("Cabins could not be loaded");
+    console.error("Supabase Error:", error);
+    throw new Error(error.message || "Cabins could not be loaded");
   }
+
+  // if (error) {
+  //   console.error(error);
+  //   throw new Error("Cabins could not be loaded");
+  // }
 }
 
 export async function deleteCabin(id) {
