@@ -54,6 +54,7 @@ function CabinRow({ cabin }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const { isCreating, createCabin } = useCreateCabin();
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const {
     id: cabinId,
@@ -95,18 +96,22 @@ function CabinRow({ cabin }) {
           <button onClick={() => setShowForm((show) => !show)}>
             <HiPencil />
           </button>
-          <Modal.Open>
-            <button>
-              <HiTrash />
-            </button>
-          </Modal.Open>
-          <Modal.Window>
-            <ConfirmDelete
-              resourceName={"cabins"}
-              disabled={isDeleting}
-              onConfirm={() => deleteCabin(cabinId)}
-            />
-          </Modal.Window>
+
+          <button onClick={() => setDeleteModal(true)}>
+            <HiTrash />
+          </button>
+          {deleteModal ? (
+            <Modal onClose={() => setDeleteModal(false)}>
+              <ConfirmDelete
+                resourceName={"cabins"}
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(cabinId)}
+                onClose={() => setDeleteModal(false)}
+              />
+            </Modal>
+          ) : (
+            ""
+          )}
         </div>
       </TableRow>
       {/* {showForm && <CreateCabinForm cabinToEdit={cabin} />} */}
