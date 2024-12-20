@@ -53,7 +53,7 @@ function Filter({ filterField, options }) {
     <StyledFilter>
       {options.map((option) => {
         <FilterButton onClick={() => handleClick(option.value)}>
-          {option.label}
+          <span>kunal is there</span>
         </FilterButton>;
       })}
     </StyledFilter>
