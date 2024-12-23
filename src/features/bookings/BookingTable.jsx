@@ -7,6 +7,7 @@ import Spinner from "../../ui/Spinner";
 
 function BookingTable() {
   const { isLoading, bookings } = useBookings();
+
   if (isLoading) return <Spinner />;
 
   if (!bookings.length) return <Empty resourceName={"Bookings"} />;
@@ -20,7 +21,6 @@ function BookingTable() {
           <div>Dates</div>
           <div>Status</div>
           <div>Amount</div>
-          <div></div>
         </Table.Header>
 
         <Table.Body
