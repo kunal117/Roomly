@@ -11,8 +11,16 @@ import { formatDistanceFromNow } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import Menus from "../../ui/Menus";
 import { useNavigate } from "react-router-dom";
-import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiTrash,
+} from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckout";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useDeleteBooking } from "./useDeleteBooking";
+import { useState } from "react";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -57,6 +65,8 @@ function BookingRow({
 }) {
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -89,6 +99,7 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
+
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
         <Menus.List id={bookingId}>
@@ -118,8 +129,24 @@ function BookingRow({
               Check out
             </Menus.Button>
           )}
+
+          <Menus.Button icon={<HiTrash />} onClick={() => setDeleteModal(true)}>
+            Delete Booking
+          </Menus.Button>
         </Menus.List>
       </Menus.Menu>
+      {deleteModal ? (
+        <Modal onClose={() => setDeleteModal(false)}>
+          <ConfirmDelete
+            resourceName={"booking"}
+            disabled={isDeleting}
+            onConfirm={() => deleteBooking(bookingId)}
+            onClose={() => setDeleteModal(false)}
+          />
+        </Modal>
+      ) : (
+        ""
+      )}
     </Table.Row>
   );
 }

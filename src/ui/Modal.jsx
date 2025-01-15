@@ -54,6 +54,30 @@ const Button = styled.button`
 `;
 
 function Modal({ children, onClose }) {
+  //   const [openName, setOpenName] = useState("");
+
+  //   const close = () => setOpenName("");
+  //   const open = setOpenName;
+
+  //   return (
+  //     <ModalContext.Provider value={{ openName, close, open }}>
+  //       {children}
+  //     </ModalContext.Provider>
+  //   );
+  // }
+
+  // function Open({ children, opens: opensWindowName }) {
+  //   const { open } = useContext(ModalContext);
+
+  //   return cloneElement(children, { onClick: () => open(opensWindowName) });
+  // }
+
+  // function Window({ children, name }) {
+  //   const { openName, close } = useContext(ModalContext);
+  //   const ref = useOutsideClick(close);
+
+  //   if (name !== openName) return null;
+
   return createPortal(
     <Overlay>
       <StyledModal>
