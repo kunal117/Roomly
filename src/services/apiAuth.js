@@ -5,6 +5,22 @@ import supabase from "./supabase";
 
 // const SUPABASE_URL = "https://orgkommtfilswfnmcgew.supabase.co";
 
+export async function signup({ fullName, email, password }) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: "",
+      },
+    },
+  });
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export async function login({ email, password }) {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -16,7 +32,6 @@ export async function login({ email, password }) {
       throw new Error("Invalid login credentials");
     }
 
-    console.log("Login successful:", data);
     return data;
   } catch (err) {
     console.error("Error during login:", err);
@@ -29,7 +44,6 @@ export async function getCurrentUser() {
   if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
-  console.log(data, error);
 
   if (error) throw new Error(error.message);
 
