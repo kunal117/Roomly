@@ -2,14 +2,15 @@ import { useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
-import FormRow from "../../ui/FormRow";
+
 import SpinnerMini from "../../ui/SpinnerMini";
 
 import { useLogin } from "./useLogin";
+import FormRowVertical from "../../ui/FormRowVertical";
 
 function LoginForm() {
-  const [email, setEmail] = useState("kunal@gmail.com");
-  const [password, setPassword] = useState("1111");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
@@ -29,7 +30,7 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
+      <FormRowVertical label="Email address">
         <Input
           type="email"
           id="email"
@@ -39,8 +40,8 @@ function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
         />
-      </FormRow>
-      <FormRow label="Password">
+      </FormRowVertical>
+      <FormRowVertical label="Password">
         <Input
           type="password"
           id="password"
@@ -49,12 +50,12 @@ function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
         />
-      </FormRow>
-      <FormRow>
+      </FormRowVertical>
+      <FormRowVertical>
         <Button size="large" disabled={isLoading}>
           {!isLoading ? "Login" : <SpinnerMini />}
         </Button>
-      </FormRow>
+      </FormRowVertical>
     </Form>
   );
 }
